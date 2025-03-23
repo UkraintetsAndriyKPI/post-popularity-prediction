@@ -1,0 +1,160 @@
+{% load static %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>{{page_name}}</title>
+
+    {% comment %}
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" /> {% endcomment %}
+    <link href="{% static "bootstrap.min.css" %}" rel="stylesheet" />
+    <link href="{% static "bootstrap.min.js" %}" rel="script" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+
+<body class="d-flex flex-column">
+    <main class="flex-shrink-0">
+        <!-- Navigation-->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container px-5">
+                <a class="navbar-brand" href="{% url "index" %}">Predict post</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation"><span
+                        class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+
+                        <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+
+
+                        <li class="nav-item"><a class="nav-link" href="faq.html">FAQ</a></li>
+                        {% if user.is_authenticated %}
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" id="navbarDropdownBlog" href="#" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">{{user.username}}</a>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownBlog">
+                                <li><a class="dropdown-item" href="#">Account page</a></li>
+                                <li><a class="dropdown-item" href="{% url "logout_page" %}">Logout <i class="bi bi-box-arrow-right"></i></a></li>
+                            </ul>
+                        </li>
+
+                        {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'login_page' %}">
+                                <i class="bi bi-box-arrow-in-right"></i> Login
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'register_page' %}">
+                                <i class="bi bi-person-plus"></i> Register
+                            </a>
+                        </li>
+
+
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+
+        {% block body %}
+
+        {% endblock body %}
+
+        {% if messages  %}
+
+            <!-- Контейнер для Toast у правому нижньому куті -->
+            <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 1050;">
+
+                {% for message in messages %}
+
+
+                    <div class="toast align-items-center border-0 show text-bg-primary" role="alert" aria-live="assertive"
+                        aria-atomic="true" data-bs-delay="1000" data-bs-autohide="true">
+                        <div class="d-flex">
+                            <div class="toast-body">
+                                {{ message|safe }}
+                            </div>
+                            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+                                aria-label="Close"></button>
+                        </div>
+                    </div>
+
+
+                {% endfor %}
+
+
+
+                {% comment %} <!-- Успішне повідомлення (зникне через 5 секунд) -->
+                <div class="toast align-items-center text-bg-success border-0 show" role="alert" aria-live="assertive"
+                    aria-atomic="true" data-bs-delay="1000" data-bs-autohide="true">
+                    <div class="d-flex">
+                        <div class="toast-body">
+                            ✅ Успішний вхід!
+                        </div>
+                        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+                            aria-label="Закрити"></button>
+                    </div>
+                </div>
+
+                <!-- Повідомлення про помилку (зникне через 3 секунди) -->
+                <div class="toast align-items-center text-bg-danger border-0 show mt-2" role="alert" aria-live="assertive"
+                    aria-atomic="true" data-bs-delay="1000" data-bs-autohide="true">
+                    <div class="d-flex">
+                        <div class="toast-body">
+                            ❌ Невірні дані для входу!
+                        </div>
+                        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+                            aria-label="Закрити"></button>
+                    </div>
+                </div> {% endcomment %}
+
+            </div>
+
+        {% endif %}
+
+    </main>
+
+
+
+
+
+
+
+
+
+
+    <!-- Footer-->
+    <footer class="bg-dark py-4 mt-auto">
+        <div class="container px-5">
+            <div class="row align-items-center justify-content-between flex-column flex-sm-row">
+                <div class="col-auto">
+                    <div class="small m-0 text-white">Copyright &copy; post-popularity-predict 2025</div>
+                </div>
+                <div class="col-auto">
+                    <a class="link-light small" href="#!">Privacy</a>
+                    <span class="text-white mx-1">&middot;</span>
+                    <a class="link-light small" href="#!">Terms</a>
+                    <span class="text-white mx-1">&middot;</span>
+                    <a class="link-light small" href="#!">Contact</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- Bootstrap core JS-->
+    <script src="{% static "bootstrap.bundle.min.js" %}"></script>
+    <!-- Core theme JS-->
+    {% comment %}
+    <script src="js/scripts.js"></script> {% endcomment %}
+</body>
+
+</html>

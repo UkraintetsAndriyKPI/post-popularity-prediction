@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+
+<div class="container p-5">
+    <!-- Contact form-->
+    <div class="bg-light rounded-3 py-5 px-4 px-md-5 mb-5">
+        <div class="text-center mb-5">
+            <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3">
+            </div>
+            <h1 class="fw-bolder">Register</h1>
+        </div>
+        <div class="row gx-5 justify-content-center">
+            <div class="col-lg-8 col-xl-6">
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <!-- Name input-->
+                    <div class="form-floating mb-3">
+                        <input class="form-control" name="username" type="text" placeholder="Enter your username..."
+                            data-sb-validations="required"/>
+                        <label for="name">Username</label>
+                        <div class="invalid-feedback" data-sb-feedback="name:required">A username is required.</div>
+                    </div>
+                    <!-- Password input-->
+                    <div class="form-floating mb-3">
+                        <input class="form-control" name="password" type="password" placeholder="Enter your password..."
+                            data-sb-validations="required"/>
+                        <label for="name">Password</label>
+                        <div class="invalid-feedback" data-sb-feedback="name:required">A password is required.</div>
+                    </div>
+
+                    <!-- Repeat password input-->
+                    <div class="form-floating mb-3">
+                        <input class="form-control" name="password_confirm" type="password" placeholder="Enter your password again..."
+                            data-sb-validations="required"/>
+                        <label for="name">Repeat password</label>
+                        <div class="invalid-feedback" data-sb-feedback="name:required">A password is required.</div>
+                    </div>
+                    <!-- Register Button-->
+                    <div class="d-grid"><button class="btn btn-primary btn-lg" id="submitButton"
+                            type="submit">Register</button></div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock body %}
