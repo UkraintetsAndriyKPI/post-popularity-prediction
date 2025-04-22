@@ -3,9 +3,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib import messages
 
-
-# Create your views here.
-
+from posts.models import Post
 
 def index(request):
     if request.user is not None and request.user.is_authenticated:
@@ -13,10 +11,24 @@ def index(request):
     else:
         page_name = "Main page"
 
+    post = post = Post.objects.latest('id')
+
+    context={
+        'page_name' : page_name,
+        'post': post,
+    }
+    return render(request, 'main/index.html', context)
+
+def faq(request):
+    if request.user is not None and request.user.is_authenticated:
+        page_name = f"FAQ page | {request.user.username}"
+    else:
+        page_name = "FAQ page"
+
     context={
         'page_name' : page_name
     }
-    return render(request, 'main/index.html', context)
+    return render(request, 'main/faq.html', context)
 
 
 def login_page(request):

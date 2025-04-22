@@ -6,75 +6,97 @@
 
 <!-- Page Content -->
 <section class="py-5">
-    <div class="container px-5 my-5">
-        <div class="text-center mb-5">
-            <h1 class="fw-bolder">Frequently Asked Questions</h1>
-            <p class="lead fw-normal text-muted mb-0">How can we help you?</p>
+    <div class="container px-5 my-1">
+        <div class="container my-4">
+            <h2 class="card-title">Latest prediction</h2>
         </div>
-        <div class="row gx-5">
-            <div class="col-l-8">
-                <!-- FAQ Accordion 2 -->
-                <h2 class="fw-bolder mb-3">Website Issues</h2>
-                <div class="accordion mb-5 mb-xl-0" id="accordionExample2">
-                    <div class="accordion-item">
-                        <h3 class="accordion-header" id="headingOne"><button class="accordion-button" type="button"
-                                data-bs-toggle="collapse" data-bs-target="#collapseOne2" aria-expanded="true"
-                                aria-controls="collapseOne2">Accordion Item #1</button></h3>
-                        <div class="accordion-collapse collapse" id="collapseOne2" aria-labelledby="headingOne"
-                            data-bs-parent="#accordionExample2">
-                            <div class="accordion-body">
-                                <strong>This is the first item's accordion body.</strong>
-                                It is shown by default, until the collapse plugin adds the appropriate classes that we
-                                use to style each element. These classes control the overall appearance, as well as the
-                                showing and hiding via CSS transitions. You can modify any of this with custom CSS or
-                                overriding our default variables. It's also worth noting that just about any HTML can go
-                                within the
-                                <code>.accordion-body</code>
-                                , though the transition does limit overflow.
-                            </div>
-                        </div>
+
+        <div class="card shadow border-0">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 class="card-title">
+                        <span class="text-muted">Title:</span> {{ post.title }}
+                    </h5>
+
+                    <span class="badge bg-primary me-2 fs-6">
+                        {% if post.platform|lower == 'twitter' %}
+                            <i class="bi bi-twitter me-1"></i> Twitter
+                        {% elif post.platform|lower == 'reddit' %}
+                            <i class="bi bi-reddit me-1"></i> Reddit
+                        {% else %}
+                            <i class="bi bi-globe me-1"></i> {{ post.platform }}
+                        {% endif %}
+                    </span>
+                </div>
+
+                <p class="card-text">
+                    <span class="text-muted">Post Content:</span>
+                    {% if post.content %}
+                    {{ post.content }}
+                    {% else %}
+                        <span class="text-muted"> . . . </span>
+                    {% endif %}
+                </p>
+
+
+                <div class="mb-3">
+                    <a href="{{ post.url }}" class="btn btn-outline-primary" target="_blank">
+                        <i class="bi bi-box-arrow-up-right me-1"></i> Visit Original Post
+                    </a>
+                </div>
+
+                <hr>
+
+
+                <div class="row text-center mb-3">
+                    <div class="col">
+                        <i class="bi bi-hand-thumbs-up-fill text-primary me-1"></i>
+                        <strong>{{ post.likes }}</strong> Likes
                     </div>
-                    <div class="accordion-item">
-                        <h3 class="accordion-header" id="headingTwo"><button class="accordion-button collapsed"
-                                type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo2"
-                                aria-expanded="false" aria-controls="collapseTwo2">Accordion Item #2</button></h3>
-                        <div class="accordion-collapse collapse" id="collapseTwo2" aria-labelledby="headingTwo"
-                            data-bs-parent="#accordionExample2">
-                            <div class="accordion-body">
-                                <strong>This is the second item's accordion body.</strong>
-                                It is hidden by default, until the collapse plugin adds the appropriate classes that we
-                                use to style each element. These classes control the overall appearance, as well as the
-                                showing and hiding via CSS transitions. You can modify any of this with custom CSS or
-                                overriding our default variables. It's also worth noting that just about any HTML can go
-                                within the
-                                <code>.accordion-body</code>
-                                , though the transition does limit overflow.
-                            </div>
-                        </div>
+                    <div class="col">
+                        <i class="bi bi-chat-dots-fill text-success me-1"></i>
+                        <strong>{{ post.comments }}</strong> Comments
                     </div>
-                    <div class="accordion-item">
-                        <h3 class="accordion-header" id="headingThree"><button class="accordion-button collapsed"
-                                type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree2"
-                                aria-expanded="false" aria-controls="collapseThree2">Accordion Item #3</button></h3>
-                        <div class="accordion-collapse collapse" id="collapseThree2" aria-labelledby="headingThree"
-                            data-bs-parent="#accordionExample2">
-                            <div class="accordion-body">
-                                <strong>This is the third item's accordion body.</strong>
-                                It is hidden by default, until the collapse plugin adds the appropriate classes that we
-                                use to style each element. These classes control the overall appearance, as well as the
-                                showing and hiding via CSS transitions. You can modify any of this with custom CSS or
-                                overriding our default variables. It's also worth noting that just about any HTML can go
-                                within the
-                                <code>.accordion-body</code>
-                                , though the transition does limit overflow.
-                            </div>
-                        </div>
+                    <div class="col">
+                        <i class="bi bi-eye-fill text-info me-1"></i>
+                        <strong>{{ post.views|default:"N/A" }}</strong> Views
                     </div>
+                </div>
+
+                <h6 class="text-muted mb-3 fs-6">
+                    <i class="bi bi-calendar-event me-1"></i>
+                    Prediction created on {{ post.timestamp|date:"F j, Y, g:i a" }}
+                </h6>
+
+                {% comment %} <h6 class="mb-3">📊 <strong>Predicted Metrics</strong></h6> {% endcomment %}
+                <div class="row text-center">
+                    <div class="col">
+                        <span class="badge bg-primary">Predicted Likes: {{ post.prediction.predicted_likes }}</span>
+                    </div>
+                    <div class="col">
+                        <span class="badge bg-success">Predicted Comments: {{ post.prediction.predicted_comments }}</span>
+                    </div>
+                    <div class="col">
+                        <span class="badge bg-warning">Predicted Shares: {{ post.prediction.predicted_shares }}</span>
+                    </div>
+                </div>
+
+                <div class="mt-3 pt-2">
+                    <h6 class="text-muted mb-3 fs-6">
+                        <span class="text-muted">Predicted Mood:</span>
+                        <span class="badge bg-dark text-white">{{ post.prediction.predicted_mood|capfirst }}</span>
+                    </h6>
+                </div>
+
+                <div class="mt-4 text-end text-muted" style="font-size: 0.9rem;">
+                    <em>Originally post/tweet created on {{ post.post_creation_timestamp|date:"F j, Y, g:i a" }}</em>
                 </div>
             </div>
         </div>
     </div>
 </section>
+
+
 
 
 {% endblock body %}
