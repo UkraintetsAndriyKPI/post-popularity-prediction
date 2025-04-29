@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+
+{% block body %}
+<section class="py-5">
+    <div class="container px-5 my-1">
+        <div class="card shadow border-0">
+            <div class="card-body">
+                <h4 class="mb-3"><i class="bi bi-file-earmark-text me-2"></i>{{ post_prediction.title|default:"Untitled" }}</h4>
+
+                <div class="mb-3">
+                    <p class="text-muted"><strong>Platform:</strong> {{ post_prediction.platform }}</p>
+                    <p class="text-muted"><strong>Posted on:</strong> {{ post_prediction.post_creation_timestamp|date:"F d, Y H:i" }}</p>
+                    <p class="text-muted"><strong>URL:</strong> <a href="{{ post_prediction.url }}" target="_blank">{{ post_prediction.url }}</a></p>
+                </div>
+
+                <hr>
+
+                <div class="mb-4">
+                    <h6 class="text-muted mb-1"><i class="bi bi-body-text me-1"></i>Content:</h6>
+                    <p>{{ post_prediction.content|default:"Empty . . ." }}</p>
+                </div>
+
+                <div class="row text-muted mb-4">
+                    <div class="col">
+                        <i class="bi bi-hand-thumbs-up me-1 text-primary"></i>Likes: {{ post_prediction.likes }}
+                    </div>
+                    <div class="col">
+                        <i class="bi bi-chat-left-text me-1 text-success"></i>Comments: {{ post_prediction.comments }}
+                    </div>
+                    <div class="col">
+                        <i class="bi bi-eye me-1 text-info"></i>Views: {{ post_prediction.views|default:"—" }}
+                    </div>
+                </div>
+
+                {% if post_prediction.prediction %}
+                    <hr>
+                    <h5 class="mt-4 mb-3"><i class="bi bi-graph-up-arrow me-1 text-primary"></i>Prediction</h5>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">Predicted Likes: {{ post_prediction.prediction.predicted_likes }}</li>
+                        <li class="list-group-item">Predicted Comments: {{ post_prediction.prediction.predicted_comments }}</li>
+                        <li class="list-group-item">Predicted Shares: {{ post_prediction.prediction.predicted_shares }}</li>
+                        <li class="list-group-item">Predicted Mood: {{ post_prediction.prediction.predicted_mood|title }}</li>
+                    </ul>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+
+{% endblock body %}

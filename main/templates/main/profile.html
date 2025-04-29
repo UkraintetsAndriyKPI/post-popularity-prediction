@@ -60,7 +60,7 @@
                     {% if predictions %}
                         <div class="list-group">
                             {% for prediction in predictions %}
-                                {% comment %} <a href="{% url 'prediction_detail' prediction.id %}" class="list-group-item list-group-item-action shadow-sm mb-2 rounded"> {% endcomment %}
+                                <a href="{% url 'prediction_detail' prediction.id %}" class="list-group-item list-group-item-action shadow-sm mb-2 rounded">
                                     <div class="d-flex w-100 justify-content-between">
                                         <h6 class="mb-1 text-dark">
                                             <i class="bi bi-{{ prediction.platform|default:'recommend' }} me-1"></i>

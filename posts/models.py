@@ -2,7 +2,6 @@ from django.db import models
 from django.contrib.auth.models import User
 from django_mongodb_backend.models import EmbeddedModel
 from django_mongodb_backend.fields import EmbeddedModelField
-import json
 
 
 class Post(models.Model):

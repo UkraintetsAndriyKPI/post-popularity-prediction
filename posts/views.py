@@ -1,8 +1,8 @@
-import json
 import re
+import json
 from datetime import datetime
 from django.utils import timezone
-from django.shortcuts import render
+from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib import messages
@@ -10,6 +10,7 @@ from django.contrib import messages
 from posts.models import Post, Prediction
 from posts.forms import PostAttempt
 from posts.jobs.jobs import CATEGORIES, client, reddit
+
 
 @login_required
 def post_attempt(request):
@@ -61,7 +62,7 @@ def post_attempt(request):
             cleaned = re.sub(r"```json|```", "", response_text).strip()
             reply_result = json.loads(cleaned)
 
-            Post.objects.create(user_id=User.objects.get(id=request.user.id),
+            post = Post.objects.create(user_id=User.objects.get(id=request.user.id),
                         platform='reddit',
                         url=f"https://reddit.com{submission.permalink}",
                         title=submission.title,
@@ -77,5 +78,14 @@ def post_attempt(request):
                             predicted_mood = reply_result['mood'],
                         ))
 
+            messages.success(request, "Prediction successfully created.")
+            return redirect('prediction_detail', post.id)
 
     return render(request, 'main/post_attempt.html', context)
+
+
+
+def prediction_detail(request, pk):
+    post_prediction = get_object_or_404(Post, id=pk)
+    return render(request,'main/post_prediction_detail.html',
+                  {'post_prediction': post_prediction})
