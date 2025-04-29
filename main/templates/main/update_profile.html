@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+
+{% block body %}
+
+<section class="py-5">
+    <div class="container px-5 my-1">
+
+        <div class="card shadow border-0">
+            <div class="card-body">
+
+                <form action="" method="POST">
+                    {% csrf_token %}
+
+                    {{ form.as_p }}
+
+                    <!-- Submit Button-->
+                    <div class="d-grid"><button class="btn btn-primary btn-lg" id="submitButton"
+                            type="submit">Update</button></div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+
+{% endblock body %}

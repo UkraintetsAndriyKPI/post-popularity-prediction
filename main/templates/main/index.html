@@ -32,7 +32,7 @@
                 <p class="card-text">
                     <span class="text-muted">Post Content:</span>
                     {% if post.content %}
-                    {{ post.content }}
+                    {{ post.content|slice:1000 }}
                     {% else %}
                         <span class="text-muted"> . . . </span>
                     {% endif %}

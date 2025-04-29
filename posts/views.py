@@ -17,6 +17,7 @@ def post_attempt(request):
     form = PostAttempt(request.POST or None)
 
     context = {
+        'page_name': f"Attempt page | {request.user.username}",
         'form': form,
     }
 
