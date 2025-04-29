@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+
+<div class="min-vh-100 d-flex justify-content-center align-items-center">
+    <div class="w-100" style="max-width: 600px;">
+
+        <h2 class="mb-4 text-center">Submit Your URL for prediction</h2>
+
+        <form action="{% url 'post_attempt' %}" method="post" class="form">
+            {% csrf_token %}
+            {% for field in form %}
+                <div class="mb-3">
+                    {{ field.label_tag }}
+                    {{ field }}
+                    {% if field.help_text %}
+                        <div class="form-text">{{ field.help_text }}</div>
+                    {% endif %}
+                    {{ field.errors }}
+                </div>
+            {% endfor %}
+            <button type="submit" class="btn btn-primary">Predict the post</button>
+        </form>
+    </div>
+</div>
+
+
+
+{% endblock body %}

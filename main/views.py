@@ -1,9 +1,11 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib import messages
 
 from posts.models import Post
+
 
 def index(request):
     if request.user is not None and request.user.is_authenticated:
@@ -19,6 +21,7 @@ def index(request):
     }
     return render(request, 'main/index.html', context)
 
+
 def faq(request):
     if request.user is not None and request.user.is_authenticated:
         page_name = f"FAQ page | {request.user.username}"
@@ -29,6 +32,16 @@ def faq(request):
         'page_name' : page_name
     }
     return render(request, 'main/faq.html', context)
+
+@login_required
+def profile(request):
+    predictions = Post.objects.filter(user_id=request.user.id).order_by('-timestamp')
+    context = {
+        'page_name': f"Profile | {request.user.username}",
+        'predictions': predictions,
+    }
+
+    return render(request, 'main/profile.html', context)
 
 
 def login_page(request):

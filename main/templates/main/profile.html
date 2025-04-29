@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+
+
+{% block body %}
+
+<!-- Profile/Dashboard Page Content -->
+<section class="py-5">
+    <div class="container px-5 my-1">
+        <div class="container my-4">
+            <h2 class="card-title">My Dashboard</h2>
+        </div>
+
+        <div class="card shadow border-0">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div>
+                        <h5 class="card-title mb-0">
+                            <i class="bi bi-person-circle me-2 text-primary"></i>{{ user.username }}
+                        </h5>
+                        <small class="text-muted">Member since {{ user.date_joined|date:"F Y" }}</small>
+                    </div>
+                    <span class="badge {{ user.is_staff|yesno:'bg-primary,bg-secondary' }} fs-6">
+                        {{ user.is_staff|yesno:"Admin,User" }}
+                    </span>
+                </div>
+
+                <hr>
+
+                <div class="col-md-8">
+                    <div class="mb-3">
+                        <h6 class="text-muted mb-1">
+                            <i class="bi bi-person-fill me-1"></i>First Name:
+                        </h6>
+                        <p class="mb-2">{{ user.first_name|default:"—" }}</p>
+                    </div>
+
+                    <div class="mb-3">
+                        <h6 class="text-muted mb-1">
+                            <i class="bi bi-person-badge-fill me-1"></i>Last Name:
+                        </h6>
+                        <p class="mb-2">{{ user.last_name|default:"—" }}</p>
+                    </div>
+
+                    <div class="mb-3">
+                        <h6 class="text-muted mb-1">
+                            <i class="bi bi-envelope-fill me-1"></i>Email:
+                        </h6>
+                        <p class="mb-2">{{ user.email|default:"—" }}</p>
+                    </div>
+                </div>
+
+
+                <hr>
+
+                <div class="mt-4">
+                    <h5 class="mb-3">
+                        <i class="bi bi-bar-chart-line-fill text-primary me-1"></i>Recent Predictions
+                    </h5>
+
+                    {% if predictions %}
+                        <div class="list-group">
+                            {% for prediction in predictions %}
+                                {% comment %} <a href="{% url 'prediction_detail' prediction.id %}" class="list-group-item list-group-item-action shadow-sm mb-2 rounded"> {% endcomment %}
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h6 class="mb-1 text-dark">
+                                            <i class="bi bi-{{ prediction.platform|default:'recommend' }} me-1"></i>
+                                            {{ prediction.title|truncatechars:50 }}
+                                        </h6>
+                                        <small class="text-muted">{{ prediction.created_at|date:"M d, Y" }}</small>
+                                    </div>
+                                    <p class="mb-1 text-muted">
+                                        {{ prediction.content|truncatewords:15 }}
+                                    </p>
+                                    <div class="d-flex justify-content-start gap-3 small text-muted">
+                                        <span><i class="bi bi-hand-thumbs-up me-1 text-primary"></i>{{ prediction.prediction.predicted_likes }} likes</span>
+                                        <span><i class="bi bi-chat-left-text me-1 text-success"></i>{{ prediction.prediction.predicted_comments }} comments</span>
+                                        <span><i class="bi bi-share me-1 text-warning"></i>{{ prediction.prediction.predicted_shares }} shares</span>
+                                    </div>
+                                </a>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <p class="text-muted">No predictions made yet.</p>
+                    {% endif %}
+                </div>
+
+
+                <hr>
+
+                <div class="mt-4 text-end">
+                    <a href="#" class="btn btn-outline-secondary">
+                        <i class="bi bi-pencil-square me-1"></i>Edit Profile
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+
+{% endblock body %}
